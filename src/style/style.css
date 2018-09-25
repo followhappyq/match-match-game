@@ -65,3 +65,8 @@ main section.game {
   height: 700px;
   background-image: url(../../images/background.jpg);
 }
+
+footer {
+  float: right;
+  margin: 10px 370px 0 0;
+}

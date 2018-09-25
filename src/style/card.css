@@ -1,0 +1,14 @@
+.game {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.clicked {
+  opacity: 0.5;
+}
+
+img {
+  width: 150px;
+  height: 200px;
+  border-radius: 5px;
+}
