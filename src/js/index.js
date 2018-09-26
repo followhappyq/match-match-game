@@ -30,7 +30,6 @@ const cardsInfo = {
 };
 
 const gameInfo = {
-  gameBegin: false,
   playingField: [1, 3, 2, 4, 1, 2, 4, 3],
   cardClicked: "",
   cardChoose: false,
@@ -45,19 +44,23 @@ const cardCheck = num => {
 };
 
 const clickOnTheCard = e => {
-  e.target.className = "front default opened";
-  console.log(e.target);
+  if (e.target.parentNode.className != "game-element flipper flipped") {
+    e.target.parentNode.className = "game-element flipper flipped";
+  } else {
+    e.target.parentNode.className = "game-element flipper";
+  }
 };
 
 const addCardsToField = () => {
   const { urlToFolder, info } = cardsInfo;
   const { playingField } = gameInfo;
   for (let i = 0; i < playingField.length; i++) {
-    field.innerHTML += `<div class="flip-container"><div class="game-element" id="card_${
+    field.innerHTML += `<div class="flip-container"><div class="game-element flipper"><div class="front default" id="card_${
       info[playingField[i] - 1].id
-    }"><div class="front default"></div></div></div>`;
+    }"></div><div class="back default"></div></div></div>`;
   }
   cards = document.getElementsByClassName("game-element");
+
   for (let i = 0; i < 8; i++) {
     cards[i].addEventListener("click", clickOnTheCard);
   }
@@ -65,12 +68,14 @@ const addCardsToField = () => {
 
 const addStopButton = () => {};
 
+const clearField = () => {
+  field.innerHTML = "";
+};
+
 const startGame = e => {
-  if (!gameInfo.gameBegin) {
-    gameInfo.gameBegin = true;
-    addCardsToField();
-    addStopButton();
-  }
+  clearField();
+  addCardsToField();
+  addStopButton();
 };
 
 const stopGame = e => {

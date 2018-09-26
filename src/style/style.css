@@ -59,18 +59,24 @@ main section.side-bar .menu #new-game:hover {
 }
 
 main section.game-field {
-  width: 1000px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   height: 700px;
   background-image: url(../../images/background.jpg);
   display: flex;
+  flex-basis: 82%;
   flex-wrap: wrap;
   align-content: space-between;
   justify-content: space-between;
 }
 
-.game-element > .front {
+.game-element > .front,
+.game-element > .back {
+  width: 220px;
+  height: 330px;
+}
+
+.flipper {
   width: 220px;
   height: 330px;
 }

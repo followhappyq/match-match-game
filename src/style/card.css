@@ -1,11 +1,10 @@
-.default {
+.front {
   background: url(../../images/skirt.png) no-repeat;
   background-size: cover;
 }
 
-.game-element > .back.opened-0,
-.game-element > .front.opened-0 {
-  background: url(../../images/alice.png);
+.back {
+  background: url(../../images/amonra.png);
   background-size: cover;
 }
 
