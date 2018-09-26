@@ -2,18 +2,19 @@ const game = document.getElementById("new-game");
 const field = document.getElementsByClassName("game-field")[0];
 let cards;
 
-const gameInfo = {
+const gameData = {
   playingField: [1, 3, 2, 4, 1, 2, 3, 4],
-  cardClicked: "",
-  cardChoose: false,
-  gameOver: false
+  cardSelected: "",
+  cardCount: 2,
+  gameOver: 4
 };
 
 const startGame = e => {
   clearField();
   shuffleCardPack();
   addCardsToField();
-  addStopButton();
+  gameData.cardSelected = "";
+  gameData.cardCount = 2;
 };
 
 const stopGame = e => {};
@@ -25,14 +26,14 @@ const clearField = () => {
 const shuffleCardPack = () => {
   for (let i = 7; i >= 0; i--) {
     let randomIndex = Math.floor(Math.random() * (i + 1));
-    let itemAtIndex = gameInfo.playingField[randomIndex];
-    gameInfo.playingField[randomIndex] = gameInfo.playingField[i];
-    gameInfo.playingField[i] = itemAtIndex;
+    let itemAtIndex = gameData.playingField[randomIndex];
+    gameData.playingField[randomIndex] = gameData.playingField[i];
+    gameData.playingField[i] = itemAtIndex;
   }
 };
 
 const addCardsToField = () => {
-  const { playingField } = gameInfo;
+  const { playingField } = gameData;
 
   for (let i = 0; i < playingField.length; i++) {
     field.innerHTML += `
@@ -47,21 +48,42 @@ const addCardsToField = () => {
   cards = document.getElementsByClassName("game-element");
   for (let i = 0; i < 8; i++) {
     cards[i].addEventListener("click", clickOnTheCard);
-    console.log(cards[i]);
   }
 };
 
-const addStopButton = () => {};
+const isSelectedTwoCard = id => {
+  const { cardSelected, playingField } = gameData;
+
+  if (id == cardSelected) {
+    for (let i = 0; i < playingField.length; i++) {
+      if (cards[i].id == id || cards[i].id == cardSelected) {
+        cards[i].className = "game-element flipper flipped disabled";
+      }
+    }
+    gameData.cardCount = 2;
+  } else {
+    for (let i = 0; i < playingField.length; i++) {
+      if (cards[i].id == id || cards[i].id == cardSelected) {
+        cards[i].className = "game-element flipper";
+      }
+    }
+    gameData.cardCount = 2;
+  }
+};
 
 const clickOnTheCard = e => {
-  const { id, childNodes } = e.target.parentNode;
+  const { className, id, childNodes } = e.target.parentNode;
 
-  if (e.target.parentNode.className != "game-element flipper flipped") {
+  if (className == "game-element flipper" && gameData.cardCount == 2) {
     e.target.parentNode.className = "game-element flipper flipped";
     childNodes[2].className = `back default opened-${id.slice(-1)}`;
-  } else {
-    e.target.parentNode.className = "game-element flipper";
-    gameInfo.cardClicked = "";
+    gameData.cardSelected = id;
+    gameData.cardCount--;
+  } else if (gameData.cardCount == 1) {
+    e.target.parentNode.className = "game-element flipper flipped";
+    childNodes[2].className = `back default opened-${id.slice(-1)}`;
+    gameData.cardCount--;
+    setTimeout(isSelectedTwoCard, 1000, id);
   }
 };
 
@@ -70,10 +92,10 @@ const cardDisabled = id => {
 };
 
 const isCardClicked = id => {
-  if (id == gameInfo.cardClicked) {
+  if (id == gameData.cardSelected) {
     return true;
   }
-  gameInfo.cardClicked = id;
+  gameData.cardSelected = id;
   return false;
 };
 
