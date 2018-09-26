@@ -1,5 +1,6 @@
 const game = document.getElementById("new-game");
 const field = document.getElementsByClassName("game-field")[0];
+const setting = document.getElementById("settings");
 let cards;
 
 const gameData = {
@@ -99,4 +100,9 @@ const isCardClicked = id => {
   return false;
 };
 
+const addTheSettingsMenu = e => {
+  e.target.parentNode.innerHTML += `<div id="animation"></div>`;
+};
+
 game.addEventListener("click", startGame);
+settings.addEventListener("click", addTheSettingsMenu);
