@@ -30,24 +30,36 @@ const cardsInfo = {
 };
 
 const gameInfo = {
-  playingField: [1, 3, 2, 4, 1, 2, 4, 3],
+  playingField: [1, 3, 2, 4, 1, 2, 3, 4],
   cardClicked: "",
   cardChoose: false,
   gameOver: false
 };
 
-const cardCheck = num => {
-  if (gameInfo.cardClicked == num) {
-    return true;
-  }
-  return false;
+const startGame = e => {
+  clearField();
+  shufflePlayindField();
+  addCardsToField();
+  addStopButton();
 };
 
-const clickOnTheCard = e => {
-  if (e.target.parentNode.className != "game-element flipper flipped") {
-    e.target.parentNode.className = "game-element flipper flipped";
-  } else {
-    e.target.parentNode.className = "game-element flipper";
+const stopGame = e => {
+  // if (!gameInfo.gameBegin) {
+  //   gameInfo.gameBegin = true;
+  //   field.innerHTML = "";
+  // }
+};
+
+const clearField = () => {
+  field.innerHTML = "";
+};
+
+const shufflePlayindField = () => {
+  for (let i = 4; i >= 0; i--) {
+    let randomIndex = Math.floor(Math.random() * (i + 1));
+    let itemAtIndex = gameInfo.playingField[randomIndex];
+    gameInfo.playingField[randomIndex] = gameInfo.playingField[i];
+    gameInfo.playingField[i] = itemAtIndex;
   }
 };
 
@@ -55,9 +67,16 @@ const addCardsToField = () => {
   const { urlToFolder, info } = cardsInfo;
   const { playingField } = gameInfo;
   for (let i = 0; i < playingField.length; i++) {
-    field.innerHTML += `<div class="flip-container"><div class="game-element flipper"><div class="front default" id="card_${
-      info[playingField[i] - 1].id
-    }"></div><div class="back default"></div></div></div>`;
+    field.innerHTML += `
+    <div class="flip-container">
+        <div class="game-element flipper" id="card_${
+          info[playingField[i] - 1].id
+        }">
+          <div class="front default" >
+          </div><div class="back default">
+        </div>
+      </div>
+    </div>`;
   }
   cards = document.getElementsByClassName("game-element");
 
@@ -68,21 +87,37 @@ const addCardsToField = () => {
 
 const addStopButton = () => {};
 
-const clearField = () => {
-  field.innerHTML = "";
+const clickOnTheCard = e => {
+  cardCheck(e);
 };
 
-const startGame = e => {
-  clearField();
-  addCardsToField();
-  addStopButton();
-};
+const cardCheck = e => {
+  const { id, childNodes } = e.target.parentNode;
 
-const stopGame = e => {
-  if (!gameInfo.gameBegin) {
-    gameInfo.gameBegin = true;
-    field.innerHTML = "";
+  if (e.target.parentNode.className != "game-element flipper flipped") {
+    e.target.parentNode.className = "game-element flipper flipped";
+    childNodes[2].className = `back default opened-${id.slice(-1)}`;
+    if (isCardClicked(id)) {
+      e.target.parentNode.className = "game-element flipper flipped disabled";
+      cardDisabled(id);
+    } else {
+    }
+  } else {
+    e.target.parentNode.className = "game-element flipper";
+    gameInfo.cardClicked = "";
   }
+};
+
+const cardDisabled = id => {
+  cards[id].className = "game-element flipper flipped disabled";
+};
+
+const isCardClicked = id => {
+  if (id.slice(-1) == gameInfo.cardClicked) {
+    return true;
+  }
+  gameInfo.cardClicked = id.slice(-1);
+  return false;
 };
 
 game.addEventListener("click", startGame);

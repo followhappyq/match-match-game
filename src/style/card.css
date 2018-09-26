@@ -3,27 +3,41 @@
   background-size: cover;
 }
 
-.back {
+/* .back {
   background: url(../../images/amonra.png);
   background-size: cover;
-}
+} */
 
-/*
 .game-element > .back.opened-1,
 .game-element > .front.opened-1 {
   background: url(../../images/amonra.png);
   background-size: cover;
+  border-radius: 10px;
 }
 
 .game-element > .back.opened-2,
 .game-element > .front.opened-2 {
   background: url(../../images/baphomet.png);
   background-size: cover;
+  border-radius: 10px;
 }
 
 .game-element > .back.opened-3,
 .game-element > .front.opened-3 {
   background: url(../../images/wild.png);
   background-size: cover;
+  border-radius: 10px;
 }
-*/
+
+.game-element > .back.opened-3,
+.game-element > .front.opened-3 {
+  background: url(../../images/alice.png);
+  background-size: cover;
+  border-radius: 10px;
+}
+
+.game-element > .back.opened-4,
+.game-element > .front.opened-4 {
+  background: url(../../images/wild.png);
+  background-size: cover;
+}

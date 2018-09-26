@@ -64,21 +64,10 @@ main section.game-field {
   height: 700px;
   background-image: url(../../images/background.jpg);
   display: flex;
-  flex-basis: 82%;
+  flex-basis: 84%;
   flex-wrap: wrap;
   align-content: space-between;
   justify-content: space-between;
-}
-
-.game-element > .front,
-.game-element > .back {
-  width: 220px;
-  height: 330px;
-}
-
-.flipper {
-  width: 220px;
-  height: 330px;
 }
 
 /* Footer */
