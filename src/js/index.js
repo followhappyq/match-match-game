@@ -1,9 +1,10 @@
 const game = document.getElementById("new-game");
-const field = document.getElementsByClassName("game")[0];
+const field = document.getElementsByClassName("game-field")[0];
 let cards;
 
 const cardsInfo = {
   urlToFolder: "../images/",
+  shirt: "shirt.png",
   info: [
     {
       id: 1,
@@ -44,28 +45,19 @@ const cardCheck = num => {
 };
 
 const clickOnTheCard = e => {
-  if (e.target.className != "clicked" && !gameInfo.cardChoose) {
-    e.target.className = "clicked";
-    gameInfo.cardClicked = e.target.name;
-    gameInfo.cardChoose = true;
-  } else {
-    if (cardCheck(e.target.name)) {
-      e.target.className = "clicked";
-      gameInfo.cardChoose = false;
-    }
-  }
+  e.target.className = "front default opened";
+  console.log(e.target);
 };
 
 const addCardsToField = () => {
   const { urlToFolder, info } = cardsInfo;
   const { playingField } = gameInfo;
   for (let i = 0; i < playingField.length; i++) {
-    field.innerHTML += `<div class="cards"><img src="${urlToFolder +
-      info[playingField[i] - 1].url}" class="image" name="${
+    field.innerHTML += `<div class="flip-container"><div class="game-element" id="card_${
       info[playingField[i] - 1].id
-    }"></div>`;
+    }"><div class="front default"></div></div></div>`;
   }
-  cards = document.getElementsByClassName("image");
+  cards = document.getElementsByClassName("game-element");
   for (let i = 0; i < 8; i++) {
     cards[i].addEventListener("click", clickOnTheCard);
   }

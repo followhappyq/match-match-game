@@ -1,0 +1,5 @@
+.opened {
+  opacity: 0.5;
+  transition: 0.6s;
+  transform: rotateY(180deg) scaleX(-1);
+}
