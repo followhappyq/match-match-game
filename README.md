@@ -1,1 +1,1 @@
-<a href="https://followhappyq.github.io/match-match-game/src/">demo</a>
+<a href="https://followhappyq.github.io/match-match-game/">demo</a>
